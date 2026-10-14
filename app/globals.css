@@ -1,0 +1,188 @@
+/* বাংলা font (Hind Siliguri) — npm package থেকে আসছে, তাই internet ছাড়াও কাজ করবে */
+@import "@fontsource/hind-siliguri/bengali-400.css";
+@import "@fontsource/hind-siliguri/bengali-500.css";
+@import "@fontsource/hind-siliguri/bengali-600.css";
+@import "@fontsource/hind-siliguri/bengali-700.css";
+
+@import "tailwindcss";
+
+/* ===== Figma এর Color / Radius token গুলো ===== */
+@theme {
+  --color-base-100: #fafcfa; /* card, header এর background */
+  --color-base-200: #f0f5f0; /* page এর background */
+  --color-base-300: #e1e8e1; /* border */
+  --color-base-content: #1d271f; /* মূল লেখার রং */
+  --color-primary: #05893e; /* সবুজ */
+  --color-primary-strong: #047f39;
+  --color-primary-stronger: #047c37;
+  --color-primary-content: #f3fbf4;
+  --color-error: #d03739; /* লাল */
+  --color-success: #1a9951; /* সবুজ (দাম কমলে) */
+
+  --color-hover-neutral: #dadeda;
+  --color-hover-neutral-border: #ccd0cc;
+  --color-hover-primary-border: #037333;
+  --color-hover-error: #bd3133;
+  --color-hover-error-border: #b02d2f;
+  --color-error-content: #fff6f5;
+  --color-link-hover: #02642b;
+
+  /* Bangla আগে, Latin/emoji এর জন্য system font */
+  --font-sans: "Hind Siliguri", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-base-200);
+  color: var(--color-base-content);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Page এর ভেতরের মূল container: max 1152px, দুই পাশে 16px */
+.container-page {
+  width: 100%;
+  max-width: 1152px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@layer components {
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding-inline: 17px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary-strong);
+  color: var(--color-primary-content);
+  box-shadow: inset 0 0.5px 0 0.5px rgb(255 255 255 / 0.06), 0 3px 2px -2px rgb(5 137 62 / 0.3),
+    0 4px 3px -2px rgb(5 137 62 / 0.3);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-stronger);
+  border-color: var(--color-hover-primary-border);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-base-content);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-hover-neutral);
+}
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-base-content);
+  color: var(--color-base-content);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--color-hover-neutral);
+  border-color: var(--color-hover-neutral-border);
+}
+.btn-outline-error {
+  background: transparent;
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+.btn-outline-error:hover:not(:disabled) {
+  background: var(--color-hover-error);
+  border-color: var(--color-hover-error-border);
+  color: var(--color-error-content);
+  box-shadow: 0 3px 2px -2px rgb(189 49 51 / 0.3), 0 4px 3px -2px rgb(189 49 51 / 0.3);
+}
+
+/* ===== Form input ===== */
+.input {
+  width: 100%;
+  height: 40px;
+  padding-inline: 13px;
+  border-radius: 8px;
+  border: 1px solid rgb(29 39 31 / 0.2);
+  background: var(--color-base-100);
+  font-size: 14px;
+  line-height: 21px;
+  box-shadow: inset 0 1px 0 0 rgb(29 39 31 / 0.02), inset 0 -1px 0 0 rgb(255 255 255 / 0.1);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input::placeholder {
+  color: rgb(29 39 31 / 0.5);
+}
+.input:focus {
+  border-color: var(--color-base-content);
+}
+.input:disabled {
+  background: var(--color-base-200);
+  color: rgb(29 39 31 / 0.7);
+}
+}
+
+/* ===== Ticker (চলমান দামের strip) ===== */
+@keyframes ticker-move {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker-move 160s linear infinite;
+}
+.ticker-wrap:hover .ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+/* ===== Skeleton loading ===== */
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, #e6ece6 25%, #f3f7f3 37%, #e6ece6 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Anchor link এ click করলে sticky header এর নিচে লুকিয়ে না যায় */
+#all-products {
+  scroll-margin-top: 140px;
+}
