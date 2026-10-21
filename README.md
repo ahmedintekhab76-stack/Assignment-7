@@ -302,8 +302,8 @@ The application is deployed on **Netlify**.
 
 ## 👤 Author
 
-**Intekhab**
-Computer and Communication Engineering, International Islamic University Chittagong (IIUC)
+**INTEKHAB**
+,Computer and Communication Engineering, International Islamic University Chittagong (IIUC)
 
 - GitHub: [@ahmedintekhab76-stack](https://github.com/ahmedintekhab76-stack)
 - Repository: [Assignment-7](https://github.com/ahmedintekhab76-stack/Assignment-7)
