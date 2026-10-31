@@ -2,9 +2,17 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "./auth";
 
-/** এখন কে login করা আছে (না থাকলে null) — server এ চলে */
+/**
+ * এখন কে login করা আছে (না থাকলে null) — server এ চলে।
+ * Database এ সমস্যা হলেও page ভেঙে পড়বে না, শুধু "login নেই" ধরে নেবে।
+ */
 export async function getSession() {
-  return auth.api.getSession({ headers: await headers() });
+  try {
+    return await auth.api.getSession({ headers: await headers() });
+  } catch (error) {
+    console.error("[auth] session পড়া যায়নি:", error);
+    return null;
+  }
 }
 
 /**

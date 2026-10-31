@@ -36,15 +36,21 @@ export default function SignUpForm() {
     }
 
     setLoading(true);
-    const { error } = await signUp.email({ name, email, password });
-    setLoading(false);
-
-    if (error) {
-      toast.error(banglaAuthError(error));
-      return;
+    try {
+      const { error } = await signUp.email({ name, email, password });
+      if (error) {
+        console.warn("[signup]", error.status, error.message);
+        toast.error(banglaAuthError(error));
+        return;
+      }
+      toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এবার সাইন ইন করুন");
+      router.push("/signin"); // নিয়ম অনুযায়ী: register শেষে login page এ যাবে
+    } catch (err) {
+      console.error("[signup]", err);
+      toast.error("অ্যাকাউন্ট তৈরি করা যায়নি, আবার চেষ্টা করুন");
+    } finally {
+      setLoading(false);
     }
-    toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এবার সাইন ইন করুন");
-    router.push("/signin"); // নিয়ম অনুযায়ী: register শেষে login page এ যাবে
   }
 
   return (

@@ -34,16 +34,22 @@ export default function SignInForm() {
     }
 
     setLoading(true);
-    const { error } = await signIn.email({ email, password });
-    setLoading(false);
-
-    if (error) {
-      toast.error(banglaAuthError(error));
-      return;
+    try {
+      const { error } = await signIn.email({ email, password });
+      if (error) {
+        console.warn("[signin]", error.status, error.message);
+        toast.error(banglaAuthError(error));
+        return;
+      }
+      toast.success("সফলভাবে সাইন ইন হয়েছে");
+      router.push(redirectTo);
+      router.refresh();
+    } catch (err) {
+      console.error("[signin]", err);
+      toast.error("সাইন ইন করা যায়নি, আবার চেষ্টা করুন");
+    } finally {
+      setLoading(false);
     }
-    toast.success("সফলভাবে সাইন ইন হয়েছে");
-    router.push(redirectTo);
-    router.refresh();
   }
 
   return (
