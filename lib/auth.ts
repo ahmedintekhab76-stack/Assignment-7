@@ -62,5 +62,13 @@ export const auth = betterAuth({
     minPasswordLength: 6,
   },
   socialProviders,
+  // একই ইমেইলে আগে email/password দিয়ে account খোলা থাকলেও Google/GitHub দিয়ে login করা যাবে
+  // (Google ও GitHub ইমেইল যাচাই করে, তাই এদের trusted ধরা নিরাপদ)
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github", "email-password"],
+    },
+  },
   plugins: [nextCookies()],
 });
