@@ -68,6 +68,8 @@ export const auth = betterAuth({
     accountLinking: {
       enabled: true,
       trustedProviders: ["google", "github", "email-password"],
+      // email/password দিয়ে খোলা account এর ইমেইল verify করা না থাকলেও Google/GitHub link করা যাবে
+      requireLocalEmailVerified: false,
     },
   },
   plugins: [nextCookies()],
